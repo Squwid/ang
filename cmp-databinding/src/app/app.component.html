@@ -1,14 +1,18 @@
 <div class="container">
-  <!-- get information when  a new server is created -->
-  <app-cockpit 
-    (sCreated)="onServerAddition($event)"
-    (bpCreated)="onBlueprintAddition($event)"></app-cockpit>
-  <hr>
-  <div class="row">
-    <div class="col-xs-12">
-      <app-server-element 
-        *ngFor="let serverElement of serverElements"
-        [srvElement]="serverElement"></app-server-element>
+    <!-- get information when  a new server is created -->
+    <app-cockpit (sCreated)="onServerAddition($event)" (bpCreated)="onBlueprintAddition($event)"></app-cockpit>
+    <hr>
+    <div class="row">
+        <div class="col-xs-12">
+            <app-server-element *ngFor="let serverElement of serverElements" [srvElement]="serverElement" [name]="serverElement.name">
+                <!-- this stuff is in between the tags where it should belong. It exists in
+                `server-element-component.html because of the <ng-content> tags -->
+                <p>
+                    <strong *ngIf="serverElement.type === 'server'" style="color: red">{{ serverElement.content }}</strong>
+                    <em *ngIf="serverElement.type === 'blueprint'">{{ serverElement.content }}</em>
+                </p>
+            </app-server-element>
+        </div>
     </div>
-  </div>
 </div>
+
